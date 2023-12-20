@@ -1,3 +1,5 @@
+package example;
+
 import api.Unit;
 
 import javax.swing.*;
