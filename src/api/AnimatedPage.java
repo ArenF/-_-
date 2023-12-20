@@ -8,12 +8,18 @@ import java.util.function.Consumer;
 public class AnimatedPage extends JPanel {
 
     HashMap<String, Unit> units = new HashMap<>();
+    HashMap<String, Element> elements = new HashMap<>();
 
+    public AnimatedPage(Element backgrounds) {
+        elements.put("background", backgrounds);
+    }
 
-    Consumer<Graphics> backgrounds;
+    public void setElement(String name, Element element) {
+        elements.put(name, element);
+    }
 
-    public AnimatedPage(Consumer<Graphics> backgrounds) {
-        this.backgrounds = backgrounds;
+    public Element getElement(String name) {
+        return elements.get(name);
     }
 
     public void addUnit(String name, Unit unit) {
@@ -31,9 +37,13 @@ public class AnimatedPage extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponents(g);
-        backgrounds.accept(g);
+        if (elements.isEmpty())
+            return;
         if (units.isEmpty())
             return;
+        for (Element elem : elements.values()) {
+            elem.callback(g);
+        }
         for (Unit unit : units.values()) {
             g.drawImage(unit.getIcon().getImage(), unit.getXToInt(), unit.getYToInt(), 50, 50, this);
         }

@@ -25,13 +25,24 @@ public class ExamGUI extends JFrame {
         });
 
         page.addUnit("name", new Hero(new ImageIcon("src/example/images/arch.jpg"), new Point(0, 0)));
-        page.getUnit("name").addAction("right", main_page -> {
-            Unit hero = main_page.getUnit("name");
-            hero.setPoint(hero.getX() + 10, hero.getY());
+        Unit name = page.getUnit("name");
+
+        name.addAction("right", main_page -> {
+            name.setPoint(name.getX() + 10, name.getY());
         });
-        page.getUnit("name").addAction("left", main_page -> {
-            Unit hero = main_page.getUnit("name");
-            hero.setPoint(hero.getX() - 10, hero.getY());
+        name.addAction("left", main_page -> {
+            name.setPoint(name.getX() - 10, name.getY());
+        });
+        name.addAction("lifesub", p -> {
+            if (name instanceof Hero) {
+                Hero hero = (Hero) name;
+                System.out.println("체력이 감소합니다.");
+                hero.setLife(hero.getLife() - 1);
+                p.setElement("알림메시지", graphics -> {
+                    graphics.setColor(Color.WHITE);
+                    graphics.drawString("현재 체력 : " + hero.getLife(), 50, 50);
+                });
+            }
         });
         this.setContentPane(page);
 
@@ -44,10 +55,13 @@ public class ExamGUI extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    page.getUnit("name").executeAction("right", page);
+                    name.executeAction("right", page);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    page.getUnit("name").executeAction("left", page);
+                    name.executeAction("left", page);
+                }
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    name.executeAction("lifesub", page);
                 }
             }
 
