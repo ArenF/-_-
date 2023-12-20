@@ -23,6 +23,10 @@ public class AnimatedPage extends JPanel {
         return elements.get(name);
     }
 
+    public void removeElement(String name) {
+        elements.remove(name);
+    }
+
     public void addUnit(String name, Unit unit) {
         units.put(name, unit);
     }
