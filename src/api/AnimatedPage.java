@@ -3,12 +3,13 @@ package api;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.function.Consumer;
 
 public class AnimatedPage extends JPanel {
 
     HashMap<String, Unit> units = new HashMap<>();
-    HashMap<String, Element> elements = new HashMap<>();
+    LinkedHashMap<String, Element> elements = new LinkedHashMap<>();
 
     public AnimatedPage(Element backgrounds) {
         elements.put("background", backgrounds);
